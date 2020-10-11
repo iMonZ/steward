@@ -19,7 +19,7 @@ module.exports.siwgentlent_authGet = (req, res) => {
       data: {
         grant_type: 'authorization_code',
         code: req.query.code,
-        redirect_uri: process.env.siwGentlent_RedURI,
+        redirect_uri: (`https://${process.env.URL}/siwgentlent_auth`),
         client_id: process.env.siwGentlent_ClientID,
         client_secret: process.env.siwGentlent_ClientSec,
       },
