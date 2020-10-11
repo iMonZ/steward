@@ -10,12 +10,12 @@ const jwt = require('jsonwebtoken');
 module.exports.siwgentlent_auth = async (req, res) => {
   res.send('Nothing to see here');
 };
-// eslint-disable-next-line camelcase
-const siwGentlent_authURL = 'https://accounts.gentlent.com/huhu';
+// eslint-disable-next-line camelcase,prefer-destructuring
+const siwGentlent_authURL = process.env.siwGentlent_authURL;
 
 // End "SiwGentlent"
-const siwaConfig = fs.readFileSync('./db/siwa/config.json');
-const siwaAuth = new AppleAuth(siwaConfig, fs.readFileSync('./db/siwa/AuthKey.p8').toString(), 'text');
+const siwaConfig = fs.readFileSync(process.env.siwaConfigPath);
+const siwaAuth = new AppleAuth(siwaConfig, fs.readFileSync(process.env.siwaAuthPath).toString(), 'text');
 module.exports.login = (req, res) => {
   res.render('login', { siwaAuthLink: siwaAuth.loginURL(), gentlentAuthLink: siwGentlent_authURL });
 };
