@@ -39,8 +39,11 @@ module.exports.siwa_auth = async (req, res) => {
       const { name } = JSON.parse(req.body.user);
       user.name = name;
     }
-
-    res.json(user);
+    const realname = '$realname';
+    res.render('loginsucc', { realname });
+    // res.json(user);
+    console.log(user.id);
+    console.log(user.email);
   } catch (ex) {
     console.error(ex);
     res.send('Sorry wrong request! 😖');
