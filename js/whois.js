@@ -23,6 +23,5 @@ module.exports.whoisGet = (req, res) => {
 };
 
 module.exports.whoisPost = async (req, res) => {
-  // eslint-disable-next-line no-template-curly-in-string
-  res.redirect('https://${req.hostname}/whois?server=${req.body.domain}');
+  res.redirect(`https://${req.hostname}/whois?server=${req.body.domain}`);
 };
