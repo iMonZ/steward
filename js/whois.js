@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // The "/whois" Page
-module.exports.whois = (req, res) => {
+module.exports.whoisGet = (req, res) => {
   // The code thats get executed
   // eslint-disable-next-line eqeqeq
   if (!req.query.server == '') {
@@ -20,4 +20,9 @@ module.exports.whois = (req, res) => {
   } else {
     res.render('whois');
   }
+};
+
+module.exports.whoisPost = async (req, res) => {
+  // eslint-disable-next-line no-template-curly-in-string,no-useless-concat
+  res.redirect('https://${req.hostname}/whois' + '?server=${req.body.domain}');
 };

@@ -26,7 +26,8 @@ app.get('/', (req, res) => {
 });
 
 // Start Whois Page
-app.get('/whois', require(process.env.whoisPagePath).whois);
+app.get('/whois', require(process.env.whoisPagePath).whoisGet);
+app.post('/whois', require(process.env.whoisPagePath).whoisPost);
 // End Whois Page
 
 // Start "Login" Pages
