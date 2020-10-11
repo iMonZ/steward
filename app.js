@@ -2,13 +2,9 @@
 const express = require('express');
 
 const app = express();
-const axios = require('axios');
-const path = require('path');
-const layout = require('express-layout');
 const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const routes = require('./routes');
 
 // Start "Server" configuration
 // HTTP Server
