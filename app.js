@@ -8,6 +8,8 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+app.use('/favicon.ico', express.static('images/favicon.ico'));
+
 // Start "Server" configuration
 // HTTPS Server
 
@@ -22,7 +24,7 @@ app.use(bodyParser.json());
 
 // The "/" Page
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {});
 });
 
 // Start Whois Page
@@ -34,12 +36,13 @@ app.post('/whois', require(process.env.whoisPagePath).whoisPost);
 app.get('/login', require(process.env.loginPagePath).login);
 // Start "Sign-In with Apple stuff"
 app.get('/siwa_token', require(process.env.loginPagePath).siwa_token);
-app.post('/siwa_auth', require(process.env.loginPagePath).siwa_auth);
+app.post('/siwa_auth', require(process.env.loginPagePath).siwa_authPost);
+app.get('/siwa_auth', require(process.env.loginPagePath).siwa_authGet);
 app.get('/siwa_refresh', require(process.env.loginPagePath).siwa_refresh);
 // End "Sign-In with Apple stuff"
 
 // Start "Sign-In with Gentlent"
-app.post('/siwgentlent_auth', require(process.env.loginPagePath).siwgentlent_auth);
+app.get('/siwgentlent_auth', require(process.env.loginPagePath).siwgentlent_authGet);
 // End "Sign-In with Apple stuff"
 // End "Login" Pages
 
