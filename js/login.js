@@ -5,24 +5,30 @@ const jwt = require('jsonwebtoken');
 // End "Some imports"
 
 // Start "Login" Page
-const siwa_config = fs.readFileSync('./db/siwa/config.json');
-const siwa_auth = new AppleAuth(siwa_config, fs.readFileSync('./db/siwa/AuthKey.p8').toString(), 'text');
-module.exports.login = (req, res) => {
-  console.log(`${Date().toString()}GET /login`);
-  // res.send(`<a href="${siwa_auth.loginURL()}">Sign in with Apple</a>`);
 
-  res.render('login', { authLink: siwa_auth.loginURL() });
+// Start "SiwGentlent"
+module.exports.siwgentlent_auth = async (req, res) => {
+  res.send('Nothing to see here');
+};
+// eslint-disable-next-line camelcase
+const siwGentlent_authURL = 'https://accounts.gentlent.com/huhu';
+
+// End "SiwGentlent"
+const siwaConfig = fs.readFileSync('./db/siwa/config.json');
+const siwaAuth = new AppleAuth(siwaConfig, fs.readFileSync('./db/siwa/AuthKey.p8').toString(), 'text');
+module.exports.login = (req, res) => {
+  res.render('login', { siwaAuthLink: siwaAuth.loginURL(), gentlentAuthLink: siwGentlent_authURL });
 };
 
 // Start "SIWA"
-
 module.exports.siwa_token = (req, res) => {
-  res.send(siwa_auth._tokenGenerator.generate());
+  // eslint-disable-next-line no-underscore-dangle
+  res.send(siwaAuth._tokenGenerator.generate());
 };
 
 module.exports.siwa_auth = async (req, res) => {
   try {
-    const response = await siwa_auth.accessToken(req.body.code);
+    const response = await siwaAuth.accessToken(req.body.code);
     const idToken = jwt.decode(response.id_token);
 
     const user = {};
@@ -37,13 +43,13 @@ module.exports.siwa_auth = async (req, res) => {
     res.json(user);
   } catch (ex) {
     console.error(ex);
-    res.send('An error occurred!');
+    res.send('Sorry wrong request! 😖');
   }
 };
 
 module.exports.siwa_refresh = async (req, res) => {
   try {
-    const accessToken = await siwa_auth.refreshToken(req.query.refreshToken);
+    const accessToken = await siwaAuth.refreshToken(req.query.refreshToken);
     res.json(accessToken);
   } catch (ex) {
     console.error(ex);
