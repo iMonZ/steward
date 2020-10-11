@@ -6,7 +6,7 @@ module.exports.whoisGet = (req, res) => {
   // eslint-disable-next-line eqeqeq
   if (!req.query.server == '') {
     const whoisquerry = encodeURIComponent(req.query.server);
-    const whoisurl = `https://www.gentlentapis.com/tools/v1/whois?query=${whoisquerry}`;
+    const whoisurl = `${process.env.whoisURL}?query=${whoisquerry}`;
     axios.get(whoisurl)
 
       .then((body) => {

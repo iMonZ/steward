@@ -8,11 +8,9 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-app.use('/favicon.ico', express.static('images/favicon.ico'));
-
 // Start "Server" configuration
+app.use('/favicon.ico', express.static('images/favicon.ico'));
 // HTTPS Server
-
 https.createServer({
   cert: fs.readFileSync(process.env.SSLPUBPATH),
   key: fs.readFileSync(process.env.SSLPRIVPATH),
@@ -22,10 +20,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // End "Server" Configuration
 
-// The "/" Page
+// Start "/" Page
 app.get('/', (req, res) => {
   res.render('index', {});
 });
+// End "/" Page
+
+// Start "HTML Validate Testing Page"
+/* app.get('/validate', (req, res) => {
+  res.render('loginsucc', { realname: 'Test' });
+}); */
+// End "HTML Validate Testing Page"
 
 // Start Whois Page
 app.get('/whois', require(process.env.whoisPagePath).whoisGet);
