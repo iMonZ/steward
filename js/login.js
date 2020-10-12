@@ -19,7 +19,7 @@ module.exports.siwgentlent_authGet = (req, res) => {
       data: {
         grant_type: 'authorization_code',
         code: req.query.code,
-        redirect_uri: (`https://${process.env.URL}/siwgentlent_auth`),
+        redirect_uri: (`https://${process.env.STWurl}/siwgentlent_auth`),
         client_id: process.env.siwGentlent_ClientID,
         client_secret: process.env.siwGentlent_ClientSec,
       },
@@ -46,9 +46,14 @@ const siwGentlent_authURL = process.env.siwGentlent_authURL;
 const siwaConfig = fs.readFileSync(process.env.siwaConfigPath);
 const siwaAuth = new AppleAuth(siwaConfig, fs.readFileSync(process.env.siwaAuthPath).toString(), 'text');
 module.exports.login = (req, res) => {
-  res.render('login', { siwaAuthLink: siwaAuth.loginURL(), gentlentAuthLink: siwGentlent_authURL });
+  if (req.hostname == process.env.STWurl) {
+    res.render('login', { siwaAuthLink: siwaAuth.loginURL(), gentlentAuthLink: siwGentlent_authURL });
+  } else if (req.hostname == process.env.GGurl) {
+    res.redirect(`https://${process.env.GGurl}`);
+  } else {
+    res.send('Sorry wrong URL');
+  }
 };
-
 // Start "SIWA"
 module.exports.siwa_token = (req, res) => {
   // eslint-disable-next-line no-underscore-dangle

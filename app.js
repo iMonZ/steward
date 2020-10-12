@@ -22,7 +22,13 @@ app.use(bodyParser.json());
 
 // Start "/" Page
 app.get('/', (req, res) => {
-  res.render('index', {});
+  if (req.hostname == process.env.STWurl) {
+    res.render('index', { GitHubSRClink: process.env.GitHubSRClink });
+  } else if (req.hostname == process.env.GGurl) {
+    res.render('indexGG', { STWurl: process.env.STWurl });
+  } else {
+    res.send('Sorry wrong URL');
+  }
 });
 // End "/" Page
 
