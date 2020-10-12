@@ -19,7 +19,8 @@
     "express-validator": "^6.6.1",
     "ejs": "^3.1.5",
     "dotenv": "^8.2.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "sass": "^1.27.0"
   },
   "devDependencies": {
     "eslint": "^7.11.0",

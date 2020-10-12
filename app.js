@@ -1,14 +1,13 @@
-/* eslint-disable import/no-dynamic-require */
+/* eslint-disable import/newline-after-import,import/no-dynamic-require */
 // Some Imports
 const express = require('express');
-
 const app = express();
 const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-require('dotenv').config();
 
 // Start "Server" configuration
+require('dotenv').config();
 app.use('/favicon.ico', express.static('images/favicon.ico'));
 // HTTPS Server
 https.createServer({
@@ -54,7 +53,7 @@ app.get('/siwa_refresh', require(process.env.loginPagePath).siwa_refresh);
 
 // Start "Sign-In with Gentlent"
 app.get('/siwgentlent_auth', require(process.env.loginPagePath).siwgentlent_authGet);
-// End "Sign-In with Apple stuff"
+// End "Sign-In with Gentlent"
 // End "Login" Pages
 
 // Start "ERROR" Pages
