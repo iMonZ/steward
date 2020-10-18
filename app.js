@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 
 // Start "Server" configuration
 require('dotenv').config();
-app.use('/favicon.ico', express.static('images/favicon.ico'));
+app.use('/favicon.ico', express.static(process.env.favicon));
 // HTTPS Server
 https.createServer({
   cert: fs.readFileSync(process.env.SSLPUBPATH),
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // End "Server" Configuration
 
-// Start "/" Page
+// Start "/ default" Page
 app.get('/', (req, res) => {
   if (req.hostname == process.env.STWurl) {
     res.render('index', { GitHubSRClink: process.env.GitHubSRClink });
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
     res.send('Sorry wrong URL');
   }
 });
-// End "/" Page
+// End "/ default" Page
 
 // Start "HTML Validate Testing Page"
 /* app.get('/validate', (req, res) => {
