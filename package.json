@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "express-layout": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
