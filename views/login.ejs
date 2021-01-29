@@ -18,5 +18,19 @@
 <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
 <br>
 <a href= "<%=gentlentAuthLink%>" ><img src="https://s1.gentcdn.com/images/assets/signin-with_black.svg" alt="Bild" width="210"/></a>
+<br>
+<br>
+<script async src="https://telegram.org/js/telegram-widget.js?14" data-telegram-login="server_steward_bot" data-size="large" data-radius="5" data-onauth="onTelegramAuth(user)" data-request-access=""></script>
+<script type="text/javascript">
+    function onTelegramAuth(user) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/login-tg", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            user: user
+        }));
+    }
+</script>
 </body>
 </html>
