@@ -80,7 +80,6 @@ app.post('/whois', require(process.env.whoisPagePath).whoisPost);
 app.get('/login', require(process.env.loginPagePath).login);
 // Start "Log-in with Telegram stuff"
 app.get('/login-tg', require(process.env.loginPagePath).loginTeleGet);
-app.post('/login-tg', require(process.env.loginPagePath).loginTelePost);
 // Stop "Log-in with Telegram stuff""
 // Start "Sign-In with Apple stuff"
 app.get('/siwa_token', require(process.env.loginPagePath).siwa_token);

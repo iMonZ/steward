@@ -87,25 +87,14 @@ module.exports.siwa_authPost = async (req, res) => {
   }
 };
 
-module.exports.loginTelePost = async (req, res) => {
-  try {
-    const user = {};
-
-    if (req.body.user) {
-      console.log(req.body.user);
-      // const { first_name } = JSON.parse(req.body.user);
-      user.name = req.body.user.first_name;
-
-      res.redirect('/test');
-    }
-  } catch (ex) {
-    res.send(ex);
-    console.error(ex);
-  }
-};
-
 module.exports.loginTeleGet = (req, res) => {
-  res.redirect(`https://${req.hostname}/yub`);
+  if (req.query.id) {
+    console.log(req.query);
+    const realname = (`${req.query.first_name},  ${req.query.username}`);
+    res.render('loginsucc', { realname });
+  } else {
+    res.redirect(`https://${process.env.STWurl}/login`);
+  }
 };
 
 module.exports.siwa_authGet = (req, res) => {
