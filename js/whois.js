@@ -4,10 +4,10 @@ const axios = require('axios');
 module.exports.whoisGet = (req, res) => {
   // The code thats get executed
   // if (!req.query.server === '') {
-  const test = req.query;
-  const json = JSON.stringify(test);
+  const { query } = req;
+  const json = JSON.stringify(query);
   console.log(`Test: ${json}`);
-  if (test !== {}) {
+  if (!req.query.server) {
     console.log('Ist server nicht NULL');
 
     console.log('request gesendet');
@@ -18,6 +18,7 @@ module.exports.whoisGet = (req, res) => {
       .then((body) => {
         res.type('text/plain').send(body.data);
       }).catch((error) => {
+        console.log(error);
         res.send('Error ☹️');
         // console.log(error);
       });
