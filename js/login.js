@@ -15,7 +15,7 @@ module.exports.siwgentlent_authGet = (req, res) => {
   if (!req.query.code == '') {
     axios({
       method: 'post',
-      url: process.env.siwGentlent_OauthAPI,
+      url: `https://${process.env.siwGentlent_OauthAPI}`,
       data: {
         grant_type: 'authorization_code',
         code: req.query.code,
@@ -25,7 +25,7 @@ module.exports.siwgentlent_authGet = (req, res) => {
       },
     }).then((RAWaccess_token) => {
       const { access_token } = RAWaccess_token.data;
-      axios.get(`${process.env.siwGentlent_getProfile}?access_token=${access_token}`).then((userData) => {
+      axios.get(`https://www.${process.env.siwGentlent_getProfile}?access_token=${access_token}`).then((userData) => {
         console.log(userData.data);
         const { display_name } = userData.data;
         res.render('loginsucc', { realname: display_name });
@@ -33,14 +33,16 @@ module.exports.siwgentlent_authGet = (req, res) => {
         res.redirect(`https://${req.hostname}/login`);
         console.log(error);
       });
+    }).catch((error) => {
+      console.log(error);
     });
   } else {
-    res.redirect(`https://${req.hostname}/login`);
+    res.redirect(`${req.hostname}/login`);
   }
 };
 
 // eslint-disable-next-line camelcase,prefer-destructuring
-const siwGentlent_authURL = process.env.siwGentlent_authURL;
+const siwGentlent_authURL = `https://${process.env.siwGentlent_authURL}`;
 
 // End "SiwGentlent"
 const siwaConfig = fs.readFileSync(process.env.siwaConfigPath);
@@ -73,7 +75,8 @@ module.exports.siwa_authPost = async (req, res) => {
       const { name } = JSON.parse(req.body.user);
       user.name = name;
     }
-    const realname = '$realname';
+    // const realname = '$realname';
+    const realname = user.email;
     res.render('loginsucc', { realname });
     // res.json(user);
     console.log(user.id);
@@ -83,6 +86,17 @@ module.exports.siwa_authPost = async (req, res) => {
     res.send('Sorry wrong request! 😖');
   }
 };
+
+module.exports.loginTeleGet = (req, res) => {
+  if (req.query.id) {
+    console.log(req.query);
+    const realname = (`${req.query.first_name},  ${req.query.username}`);
+    res.render('loginsucc', { realname });
+  } else {
+    res.redirect(`https://${process.env.STWurl}/login`);
+  }
+};
+
 module.exports.siwa_authGet = (req, res) => {
   res.redirect(`https://${req.hostname}/login`);
 };
