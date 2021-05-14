@@ -31,7 +31,7 @@ app.use('/favicon.ico', express.static(process.env.favicon));
 app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
-// HTTPS secure Server
+// HTTPS Server
 https.createServer({
   cert: fs.readFileSync(process.env.SSLPUBPATH),
   key: fs.readFileSync(process.env.SSLPRIVPATH),
@@ -78,9 +78,7 @@ app.post('/whois', require(process.env.whoisPagePath).whoisPost);
 
 // Start "Login" Pages
 app.get('/login', require(process.env.loginPagePath).login);
-// Start "Log-in with Telegram stuff"
-app.get('/login-tg', require(process.env.loginPagePath).loginTeleGet);
-// Stop "Log-in with Telegram stuff""
+app.post('/login-tg', require(process.env.loginPagePath).loginTele);
 // Start "Sign-In with Apple stuff"
 app.get('/siwa_token', require(process.env.loginPagePath).siwa_token);
 app.post('/siwa_auth', require(process.env.loginPagePath).siwa_authPost);

@@ -77,23 +77,36 @@ module.exports.siwa_authPost = async (req, res) => {
     }
     // const realname = '$realname';
     const realname = user.email;
-    res.render('loginsucc', { realname });
+    res.render('loginsucc', { realname: 'realname' });
     // res.json(user);
     console.log(user.id);
     console.log(user.email);
   } catch (ex) {
     console.error(ex);
-    res.send('Sorry wrong request! 😖');
   }
 };
 
-module.exports.loginTeleGet = (req, res) => {
-  if (req.query.id) {
-    console.log(req.query);
-    const realname = (`${req.query.first_name},  ${req.query.username}`);
+module.exports.loginTele = async (req, res) => {
+  try {
+    const response = await req.body.user;
+    const id = await response.id;
+    const first_name = await response.first_name;
+    const username = await response.username;
+    const auth_date = await response.auth_date;
+    const authHash = await response.hash;
+
+    const user = {};
+
+    if (req.body.user) {
+      console.log(req.body.user);
+      // const { first_name } = JSON.parse(req.body.user);
+      user.name = first_name;
+    }
+
+    const realname = user.name;
     res.render('loginsucc', { realname });
-  } else {
-    res.redirect(`https://${process.env.STWurl}/login`);
+  } catch (ex) {
+    console.error(ex);
   }
 };
 
